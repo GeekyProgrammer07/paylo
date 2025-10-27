@@ -1,5 +1,5 @@
 {
-  "extends": "@paylo/typescript-config/react-library.json",
+  "extends": "@paylo/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist"
   },

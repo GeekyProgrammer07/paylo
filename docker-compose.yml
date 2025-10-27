@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: paylo_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecret
+      POSTGRES_DB: paylo-main
+    ports:
+      - "5432:5432"
+    volumes:
+      - paylo_data:/var/lib/postgresql/data
+
+volumes:
+  paylo_data:
