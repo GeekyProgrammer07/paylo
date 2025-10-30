@@ -1,1 +1,1 @@
-export * from "../generated/prisma/client";
+export { PrismaClient } from "@prisma/client";
