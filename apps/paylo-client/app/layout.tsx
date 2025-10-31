@@ -1,10 +1,10 @@
-import "./globals.css"
+import './globals.css';
 import { Providers } from "./providers"
 import localFont from "next/font/local";
 
 export const metadata = {
-  title: "My Next App",
-  description: "Built with Next.js and Jotai",
+  title: "Client",
+  description: "This is the Client facing App",
 }
 
 const geistMono = localFont({

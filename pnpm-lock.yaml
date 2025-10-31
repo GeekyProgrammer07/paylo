@@ -99,6 +99,9 @@ importers:
       next:
         specifier: 16.0.0
         version: 16.0.0(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next-auth:
+        specifier: ^4.24.12
+        version: 4.24.12(next@16.0.0(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: 19.2.0
         version: 19.2.0
@@ -208,7 +211,7 @@ importers:
         version: 19.2.0
       react-dom:
         specifier: ^19.1.0
-        version: 19.1.0(react@19.2.0)
+        version: 19.2.0(react@19.2.0)
     devDependencies:
       '@paylo/eslint-config':
         specifier: workspace:*
@@ -4299,6 +4302,21 @@ snapshots:
       preact-render-to-string: 5.2.6(preact@10.27.2)
       react: 19.2.0
       react-dom: 19.1.0(react@19.2.0)
+      uuid: 8.3.2
+
+  next-auth@4.24.12(next@16.0.0(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@panva/hkdf': 1.2.1
+      cookie: 0.7.2
+      jose: 4.15.9
+      next: 16.0.0(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      oauth: 0.9.15
+      openid-client: 5.7.1
+      preact: 10.27.2
+      preact-render-to-string: 5.2.6(preact@10.27.2)
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
       uuid: 8.3.2
 
   next@16.0.0(@babel/core@7.28.5)(react-dom@19.1.0(react@19.2.0))(react@19.2.0):
