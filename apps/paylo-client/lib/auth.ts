@@ -1,8 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@paylo/db/client";
-
-const client = new PrismaClient();
+import prisma from "@paylo/db/client";
 
 export const authOptions = {
   providers: [
@@ -16,11 +14,11 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      // TODO: User credentials type from next-aut
+      // TODO: User credentials type from next-auth
       async authorize(credentials: any) {
         // TODO: zod validation, OTP validation here
         const hashedPassword = await bcrypt.hash(credentials.password, 10);
-        const existingUser = await client.user.findFirst({
+        const existingUser = await prisma.user.findFirst({
           where: {
             number: credentials.phone,
           },
@@ -42,7 +40,7 @@ export const authOptions = {
         }
 
         try {
-          const user = await client.user.create({
+          const user = await prisma.user.create({
             data: {
               number: credentials.phone,
               password: hashedPassword,

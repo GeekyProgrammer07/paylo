@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@paylo/typescript-config": "workspace:*",
+    "@types/node": "^24.10.0",
     "dotenv": "^17.2.3",
     "prisma": "^6.18.0"
   },
