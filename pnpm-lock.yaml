@@ -21,6 +21,40 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
+  apps/bank-webhook:
+    dependencies:
+      '@paylo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
+      express:
+        specifier: ^5.1.0
+        version: 5.1.0
+    devDependencies:
+      '@paylo/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@paylo/prettier-config':
+        specifier: workspace:*
+        version: link:../../packages/prettier-config
+      '@paylo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      '@types/express':
+        specifier: ^5.0.5
+        version: 5.0.5
+      concurrently:
+        specifier: ^9.2.1
+        version: 9.2.1
+      esbuild:
+        specifier: ^0.25.11
+        version: 0.25.11
+      wait-on:
+        specifier: ^9.0.1
+        version: 9.0.1
+
   apps/mock-bank-service:
     dependencies:
       '@paylo/db':
@@ -3714,7 +3748,7 @@ snapshots:
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.15.3
+      '@types/node': 24.10.0
 
   '@types/connect@3.4.38':
     dependencies:
@@ -3779,7 +3813,7 @@ snapshots:
   '@types/serve-static@1.15.10':
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 22.15.3
+      '@types/node': 24.10.0
       '@types/send': 0.17.6
 
   '@typescript-eslint/eslint-plugin@8.40.0(@typescript-eslint/parser@8.40.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.2))(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.2)':
