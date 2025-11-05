@@ -20,7 +20,7 @@ app.post("/createTransfer", (_, res) => {
   res.send("Hello");
 });
 
-app.get("/hdfcWebhook", (req, res) => {
+app.get("/hdfcWebhook", async (req, res) => {
   //TODO: Add zod validation
   //TODO: HDFC should send us a secret to verify
   const paymentInformation: PaymentInformation = {
@@ -30,25 +30,26 @@ app.get("/hdfcWebhook", (req, res) => {
   };
 
   try {
-    prisma.balance.update({
-      where: {
-        uuid: paymentInformation.userId,
-      },
-      data: {
-        amount: {
-          increment: Number(paymentInformation.amount),
+    await prisma.$transaction([
+      prisma.balance.update({
+        where: {
+          uuid: paymentInformation.userId,
         },
-      },
-    });
-
-    prisma.onRampTransaction.updateMany({
-      where: {
-        uuid: paymentInformation.userId,
-      },
-      data: {
-        status: "Success",
-      },
-    });
+        data: {
+          amount: {
+            increment: Number(paymentInformation.amount),
+          },
+        },
+      }),
+      prisma.onRampTransaction.updateMany({
+        where: {
+          uuid: paymentInformation.userId,
+        },
+        data: {
+          status: "Success",
+        },
+      }),
+    ]);
 
     res.status(200).json({
       message: "Captured",

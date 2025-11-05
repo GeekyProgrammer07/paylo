@@ -1,4 +1,3 @@
-import { JSX } from "react";
 import { Button } from "./button";
 
 interface AppbarProps {
@@ -10,10 +9,12 @@ interface AppbarProps {
   onSignout: any;
 }
 
-export const Appbar = ({ user, onSignin, onSignout }: AppbarProps): JSX.Element => {
+export const Appbar = ({ user, onSignin, onSignout }: AppbarProps) => {
   return (
-    <div className="flex justify-between border-b px-4">
-      <div className="text-xl flex flex-col justify-center">PayTM</div>
+    <div className="flex justify-between items-center border-b border-slate-300 px-6 py-3 bg-white shadow-sm">
+      <div className="text-2xl font-extrabold text-blue-600">
+        Pay<span className="text-slate-900">LO</span>
+      </div>
       <div className="flex flex-col justify-center pt-2">
         <Button onClick={user ? onSignout : onSignin}>
           {user ? "Logout" : "Login"}
