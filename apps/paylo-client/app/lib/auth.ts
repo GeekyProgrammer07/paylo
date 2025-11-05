@@ -7,12 +7,27 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
+        name: {
+          label: "Name",
+          type: "text",
+          placeholder: "John Doe",
+        },
         phone: {
           label: "Phone number",
           type: "text",
           placeholder: "1231231231",
         },
-        password: { label: "Password", type: "password" },
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "johndoe@example.com",
+        },
+
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "********",
+        },
       },
       // TODO: User credentials type from next-auth
       async authorize(credentials: any) {

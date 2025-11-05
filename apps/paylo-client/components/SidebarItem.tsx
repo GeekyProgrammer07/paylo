@@ -15,14 +15,14 @@ export const SidebarItem = ({ href, title, icon }: SideBarItem) => {
 
   return (
     <div
-      className={`flex ${selected ? "text-[#6a51a6]" : "text-slate-500"} cursor-pointer  p-3 pl-8`}
+      className={`flex ${selected ? "text-blue-700" : "text-slate-500"} cursor-pointer  p-3 pl-8`}
       onClick={() => {
         router.push(href);
       }}
     >
       <div className="pr-2">{icon}</div>
       <div
-        className={`font-bold ${selected ? "text-[#6a51a6]" : "text-slate-500"}`}
+        className={`font-bold ${selected ? "text-blue-700" : "text-slate-500"}`}
       >
         {title}
       </div>
