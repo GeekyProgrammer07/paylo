@@ -4,7 +4,7 @@ interface AppbarProps {
   user?: {
     name?: string | null;
   };
-  // TODO: can u figure out what the type should be here?
+  // TODO: Change any to porper types
   onSignin: any;
   onSignout: any;
 }

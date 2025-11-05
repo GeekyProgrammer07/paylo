@@ -1,23 +1,70 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "DATABASE_URL",
+    "PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": []
     },
+
+    "@paylo/client#build": {
+      "dependsOn": ["^build"],
+      "env": [
+        "NEXTAUTH_URL",
+        "JWT_SECRET"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+
+    "@paylo/merchant#build": {
+      "dependsOn": ["^build"],
+      "env": [
+        "NEXTAUTH_URL",
+        "JWT_SECRET",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+
+    "@paylo/bank-webhook#build": {
+      "dependsOn": ["^build"],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+
+    "@paylo/mock-bank-service#build": {
+      "dependsOn": ["^build"],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+
     "lint": {
       "dependsOn": ["^lint"]
     },
+
     "check-types": {
       "dependsOn": ["^check-types"]
     },
+
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "lint:fix" : {
+
+    "lint:fix": {
       "cache": false,
       "dependsOn": ["^lint:fix"]
     }
