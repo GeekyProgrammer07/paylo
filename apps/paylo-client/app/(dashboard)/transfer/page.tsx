@@ -9,7 +9,7 @@ async function getBalance() { //TODO: change the type
    const session = await getServerSession(authOptions);
   const balance = await prisma.balance.findFirst({
     where: {
-      userId: Number(session?.user?.dbId),
+      userId: session?.user?.dbId,
     },
   });
   return {

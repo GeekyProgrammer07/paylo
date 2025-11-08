@@ -5,10 +5,11 @@ import prisma from "@paylo/db/client";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const app = express();
+app.use(express.json());
 
 type PaymentInformation = {
   token: string;
-  userId: string;
+  userId: number;
   amount: number;
 };
 
@@ -25,25 +26,24 @@ app.post("/hdfcWebhook", async (req, res) => {
   //TODO: HDFC should send us a secret to verify
   const paymentInformation: PaymentInformation = {
     token: req.body.token,
-    userId: req.body.user_Id,
+    userId: req.body.userId,
     amount: req.body.amount,
   };
-
   try {
     await prisma.$transaction([
       prisma.balance.update({
         where: {
-          uuid: paymentInformation.userId,
+          userId: paymentInformation.userId,
         },
         data: {
           amount: {
-            increment: Number(paymentInformation.amount),
+            increment: Number(paymentInformation.amount * 100),
           },
         },
       }),
       prisma.onRampTransaction.updateMany({
         where: {
-          uuid: paymentInformation.userId,
+          token: paymentInformation.token,
         },
         data: {
           status: "Success",

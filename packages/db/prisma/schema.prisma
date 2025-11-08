@@ -16,6 +16,8 @@ model User {
   password          String
   OnRampTransaction OnRampTransaction[]
   Balance           Balance?
+
+  @@unique([id, uuid])
 }
 
 model Merchant {
@@ -27,20 +29,19 @@ model Merchant {
 }
 
 model OnRampTransaction {
-  id         Int          @id @default(autoincrement())
-  uuid       String       @default(uuid()) @db.Uuid
-  status     OnRampStatus
-  token      String       @unique
-  provider   String
-  amount     Int
-  startTime  DateTime
-  userId     Int
-  user       User         @relation(fields: [userId], references: [id])
+  id        Int          @id @default(autoincrement())
+  uuid      String       @db.Uuid
+  status    OnRampStatus
+  token     String       @unique
+  provider  String
+  amount    Int
+  startTime DateTime
+  userId    Int
+  user      User         @relation(fields: [userId, uuid], references: [id, uuid])
 }
 
 model Balance {
   id     Int    @id @default(autoincrement())
-  uuid   String @unique @default(uuid()) @db.Uuid
   userId Int    @unique
   amount Int
   locked Int
