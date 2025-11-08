@@ -5,6 +5,7 @@ import { Card } from "@paylo/ui/Card";
 import { TextInput } from "@paylo/ui/TextInput";
 import { Select } from "@paylo/ui/Select";
 import { Button } from "@paylo/ui/button";
+import { createOnRampTransaction } from "../app/lib/actions/createOnRampTxn";
 
 const SUPPORTED_BANKS = [
   {
@@ -19,8 +20,11 @@ const SUPPORTED_BANKS = [
 
 export const AddMoney = () => {
   const [redirectUrl, setRedirectUrl] = useState(
+    // This Redirect url shold have came from the bank
     SUPPORTED_BANKS[0]?.redirectUrl
   );
+  const [amount, setAmount] = useState(0);
+  const [provider, setProvider] = useState(SUPPORTED_BANKS[0]!.name); //TODO: Add more banks
   return (
     <Card title="Add Money">
       <div className="w-full">
@@ -28,13 +32,18 @@ export const AddMoney = () => {
         <TextInput
           label={"Amount"}
           placeholder={"Amount"}
-          onChange={() => {}}
+          onChange={(value) => {
+            setAmount(value);
+          }}
         />
         <div className="py-4 text-left">Bank</div>
         <Select
           onSelect={(value) => {
             setRedirectUrl(
               SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ""
+            );
+            setProvider(
+              SUPPORTED_BANKS.find((x) => x.name === value)?.name || ""
             );
           }}
           options={SUPPORTED_BANKS.map((x) => ({
@@ -44,7 +53,8 @@ export const AddMoney = () => {
         />
         <div className="flex justify-center pt-4">
           <Button
-            onClick={() => {
+            onClick={async () => {
+              await createOnRampTransaction(amount * 100, provider); // TODO: Change the hello to the appr bank also do amount * 100 over here
               window.location.href = redirectUrl || "";
             }}
           >

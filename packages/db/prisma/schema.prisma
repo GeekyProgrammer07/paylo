@@ -28,7 +28,7 @@ model Merchant {
 
 model OnRampTransaction {
   id         Int          @id @default(autoincrement())
-  uuid       String       @unique @default(uuid()) @db.Uuid
+  uuid       String       @default(uuid()) @db.Uuid
   status     OnRampStatus
   token      String       @unique
   provider   String

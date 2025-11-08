@@ -46,7 +46,8 @@ export const authOptions = {
           );
           if (passwordValidation) {
             return {
-              id: existingUser.id.toString(),
+              id: existingUser.uuid,
+              dbId: existingUser.id,
               name: existingUser.name,
               email: existingUser.number,
             };
@@ -63,7 +64,8 @@ export const authOptions = {
           });
 
           return {
-            id: user.id.toString(),
+            id: user.uuid,
+            dbId: user.id,
             name: user.name,
             email: user.number,
           };
@@ -77,10 +79,17 @@ export const authOptions = {
   ],
   secret: process.env.JWT_SECRET || "secret",
   callbacks: {
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.id = user.id;
+        token.dbId = user.dbId;
+      }
+      return token;
+    },
     // TODO: Change any to correct type
-    async session({ token, session }: any) {
-      session.user.id = token.sub;
-
+    async session({ token, session, user }: any) {
+      session.user.id = token.id;
+      session.user.dbId = token.dbId;
       return session;
     },
     async redirect({

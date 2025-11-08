@@ -18,11 +18,12 @@ export const OnRampTransactions = ({
       </Card>
     );
   }
+  //TODO: Add Various status or color like green for succ yel for proc, red for fail
   return (
     <Card title="Recent Transactions">
       <div className="pt-2">
-        {transactions.map((t) => (
-          <div className="flex justify-between">
+        {transactions.map((t,index) => (
+          <div key={index} className="flex justify-between">
             <div>
               <div className="text-sm">Received INR</div>
               <div className="text-slate-600 text-xs">

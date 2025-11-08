@@ -20,7 +20,7 @@ app.post("/createTransfer", (_, res) => {
   res.send("Hello");
 });
 
-app.get("/hdfcWebhook", async (req, res) => {
+app.post("/hdfcWebhook", async (req, res) => {
   //TODO: Add zod validation
   //TODO: HDFC should send us a secret to verify
   const paymentInformation: PaymentInformation = {
