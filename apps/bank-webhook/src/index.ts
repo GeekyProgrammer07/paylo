@@ -24,6 +24,7 @@ app.post("/createTransfer", (_, res) => {
 app.post("/hdfcWebhook", async (req, res) => {
   //TODO: Add zod validation
   //TODO: HDFC should send us a secret to verify
+  //TODO: Check for processing in db only then increase the balance
   const paymentInformation: PaymentInformation = {
     token: req.body.token,
     userId: req.body.userId,
@@ -36,7 +37,7 @@ app.post("/hdfcWebhook", async (req, res) => {
           userId: paymentInformation.userId,
         },
         data: {
-          amount: {
+          balance: {
             increment: Number(paymentInformation.amount * 100),
           },
         },

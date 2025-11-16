@@ -12,7 +12,7 @@ const main = async () => {
       number: "1111111111",
       password: await bcrypt.hash("john", 10),
       Balance: {
-        create: { amount: 20000, locked: 0 },
+        create: { balance: 20000, locked: 0 },
       },
       OnRampTransaction: {
         create: {
@@ -36,7 +36,7 @@ const main = async () => {
       number: "2222222222",
       password: await bcrypt.hash("alice", 10),
       Balance: {
-        create: { amount: 3000, locked: 500 },
+        create: { balance: 3000, locked: 500 },
       },
       OnRampTransaction: {
         create: [
@@ -69,7 +69,7 @@ const main = async () => {
       number: "3333333333",
       password: await bcrypt.hash("bob", 10),
       Balance: {
-        create: { amount: 8000, locked: 1000 },
+        create: { balance: 8000, locked: 1000 },
       },
       OnRampTransaction: {
         create: [
@@ -102,7 +102,7 @@ const main = async () => {
       number: "4444444444",
       password: await bcrypt.hash("charlie", 10),
       Balance: {
-        create: { amount: 50000, locked: 0 },
+        create: { balance: 50000, locked: 0 },
       },
       OnRampTransaction: {
         create: {
@@ -126,7 +126,7 @@ const main = async () => {
       number: "5555555555",
       password: await bcrypt.hash("diana", 10),
       Balance: {
-        create: { amount: 0, locked: 0 },
+        create: { balance: 0, locked: 0 },
       },
       OnRampTransaction: {
         create: {

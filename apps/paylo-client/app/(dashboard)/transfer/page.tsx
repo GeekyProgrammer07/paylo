@@ -13,7 +13,7 @@ async function getBalance() { //TODO: change the type
     },
   });
   return {
-    amount: balance?.amount || 0,
+    balance: balance?.balance || 0,
     locked: balance?.locked || 0,
   };
 }
@@ -45,7 +45,7 @@ export default async function () {
           <AddMoney />
         </div>
         <div>
-          <BalanceCard amount={balance.amount} locked={balance.locked} />
+          <BalanceCard amount={balance.balance} locked={balance.locked} />
           <div className="pt-4">
             <OnRampTransactions transactions={transactions} />
           </div>

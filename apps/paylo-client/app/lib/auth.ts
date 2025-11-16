@@ -49,7 +49,8 @@ export const authOptions = {
               id: existingUser.uuid,
               dbId: existingUser.id,
               name: existingUser.name,
-              email: existingUser.number,
+              email: existingUser.email,
+              number: existingUser.number
             };
           }
           return null;
@@ -69,7 +70,8 @@ export const authOptions = {
             id: user.uuid,
             dbId: user.id,
             name: user.name,
-            email: user.number,
+            email: user.email,
+            number: user.number
           };
         } catch (e) {
           console.error(e);
@@ -85,6 +87,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.dbId = user.dbId;
+        token.number = user.number;
       }
       return token;
     },
@@ -92,6 +95,7 @@ export const authOptions = {
     async session({ token, session, user }: any) {
       session.user.id = token.id;
       session.user.dbId = token.dbId;
+      session.user.number = token.number;
       return session;
     },
     async redirect({
