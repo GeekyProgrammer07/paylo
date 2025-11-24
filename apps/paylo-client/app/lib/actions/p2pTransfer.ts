@@ -43,12 +43,6 @@ export const p2pTransfer = async (to: string, amount: number) => {
         },
       });
 
-      console.log("Before Promise");
-      await new Promise((resolve) => {
-        setTimeout(resolve,4000);
-      });
-      console.log("After Promise");
-
       if (sender.balance < 0) {
         throw new Error("Insufficient balance");
       }
@@ -63,6 +57,15 @@ export const p2pTransfer = async (to: string, amount: number) => {
           userId: toUser.id,
         },
       });
+
+      await tx.p2pTransfer.create({
+        data: {
+          amount: amount * 100,
+          timestamp: new Date(),
+          fromUserId: Number(fromUser.dbId),
+          toUserId: toUser.id
+        }
+      })
     });
 
     return {

@@ -20,6 +20,10 @@
     "lint:fix" : {
       "cache": false,
       "dependsOn": ["^lint:fix"]
+    },
+    "start" : {
+      "cache": false,
+      "dependsOn": ["^start"]
     }
   }
 }

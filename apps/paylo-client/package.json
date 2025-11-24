@@ -21,7 +21,7 @@
     "next-auth": "^4.24.12",
     "randomstring": "^1.3.1",
     "react": "^19.2.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@paylo/eslint-config": "workspace:*",
