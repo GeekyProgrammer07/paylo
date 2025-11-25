@@ -19,6 +19,7 @@ app.post("/createTransfer", (_, res) => {
 });
 
 app.post("/hdfcWebhook", async (req, res) => {
+  console.log("Hello, Testing CI");
   //TODO: Add zod validation
   //TODO: HDFC should send us a secret to verify
   //TODO: Check for processing in db only then increase the balance
