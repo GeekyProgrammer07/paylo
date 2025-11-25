@@ -1,0 +1,22 @@
+{
+  "name": "@paylo/types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@paylo/typescript-config": "workspace:*"
+  },
+  "dependencies": {
+    "next-auth": "^4.24.12",
+    "zod": "^4.1.13"
+  }
+}

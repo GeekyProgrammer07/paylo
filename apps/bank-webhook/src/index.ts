@@ -2,16 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import prisma from "@paylo/db/client";
+import { PaymentInformation } from "@paylo/types";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const app = express();
 app.use(express.json());
 
-type PaymentInformation = {
-  token: string;
-  userId: number;
-  amount: number;
-};
+console.log("Hi there");
 
 app.get("/", (_, res) => {
   res.send("Hey there");

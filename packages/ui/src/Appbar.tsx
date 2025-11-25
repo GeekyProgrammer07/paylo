@@ -5,8 +5,8 @@ interface AppbarProps {
     name?: string | null;
   };
   // TODO: Change any to porper types
-  onSignin: any;
-  onSignout: any;
+  onSignin: () => Promise<void>;
+  onSignout: () => Promise<void>;
 }
 
 export const Appbar = ({ user, onSignin, onSignout }: AppbarProps) => {

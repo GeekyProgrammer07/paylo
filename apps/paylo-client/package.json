@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@paylo/eslint-config": "workspace:*",
+    "@paylo/types": "workspace:*",
     "@paylo/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/bcrypt": "^6.0.0",

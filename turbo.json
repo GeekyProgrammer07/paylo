@@ -19,6 +19,11 @@
     "lint": {
       "dependsOn": [
         "^lint"
+      ],
+      "env": [
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "JWT_SECRET"
       ]
     },
     "check-types": {
@@ -31,7 +36,9 @@
       "persistent": true
     },
     "start": {
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "cache": false
     }
   }

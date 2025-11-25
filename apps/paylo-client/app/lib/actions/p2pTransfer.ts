@@ -63,19 +63,25 @@ export const p2pTransfer = async (to: string, amount: number) => {
           amount: amount * 100,
           timestamp: new Date(),
           fromUserId: Number(fromUser.dbId),
-          toUserId: toUser.id
-        }
-      })
+          toUserId: toUser.id,
+        },
+      });
     });
 
     return {
       ok: true,
       message: "Transfer successful",
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return {
+        ok: false,
+        message: err.message,
+      };
+    }
     return {
       ok: false,
-      message: err.message || "Transaction failed",
+      message: "Transaction failed",
     };
   }
 };

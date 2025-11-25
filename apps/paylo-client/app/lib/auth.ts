@@ -1,6 +1,9 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import prisma from "@paylo/db/client";
+import { DBUser, LoginCredentials } from "@paylo/types";
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth";
 
 export const authOptions = {
   providers: [
@@ -30,18 +33,18 @@ export const authOptions = {
         },
       },
       // TODO: User credentials type from next-auth
-      async authorize(credentials: any) {
+      async authorize(credentials: LoginCredentials | undefined) {
         // TODO: zod validation, OTP validation here
-        const hashedPassword = await bcrypt.hash(credentials.password, 10);
+        const hashedPassword = await bcrypt.hash(credentials!.password, 10);
         const existingUser = await prisma.user.findFirst({
           where: {
-            number: credentials.phone,
+            number: credentials!.phone,
           },
         });
 
         if (existingUser) {
           const passwordValidation = await bcrypt.compare(
-            credentials.password,
+            credentials!.password,
             existingUser.password
           );
           if (passwordValidation) {
@@ -50,7 +53,7 @@ export const authOptions = {
               dbId: existingUser.id,
               name: existingUser.name,
               email: existingUser.email,
-              number: existingUser.number
+              number: existingUser.number,
             };
           }
           return null;
@@ -59,9 +62,9 @@ export const authOptions = {
         try {
           const user = await prisma.user.create({
             data: {
-              name: credentials.name,
-              number: credentials.phone,
-              email: credentials.email,
+              name: credentials!.name,
+              number: credentials!.phone!,
+              email: credentials!.email,
               password: hashedPassword,
             },
           });
@@ -71,7 +74,7 @@ export const authOptions = {
             dbId: user.id,
             name: user.name,
             email: user.email,
-            number: user.number
+            number: user.number,
           };
         } catch (e) {
           console.error(e);
@@ -83,7 +86,7 @@ export const authOptions = {
   ],
   secret: process.env.JWT_SECRET || "secret",
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }: { token: JWT; user?: Partial<DBUser> }) {
       if (user) {
         token.id = user.id;
         token.dbId = user.dbId;
@@ -92,14 +95,13 @@ export const authOptions = {
       return token;
     },
     // TODO: Change any to correct type
-    async session({ token, session, user }: any) {
-      session.user.id = token.id;
-      session.user.dbId = token.dbId;
-      session.user.number = token.number;
+    async session({ session, token }: { session: Session; token: JWT }) {
+      session.user.id = token.id as string;
+      session.user.dbId = token.dbId as number;
+      session.user.number = token.number as string;
       return session;
     },
     async redirect({
-      url,
       baseUrl,
     }: {
       url: string;
