@@ -8,8 +8,6 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const app = express();
 app.use(express.json());
 
-console.log("Hi there");
-
 app.get("/", (_, res) => {
   res.send("Hey there");
 });
