@@ -21,7 +21,7 @@ jobs:
       - name: Build & Push paylo-client
         uses: docker/build-push-action@v6
         with:
-          context: ./apps/paylo-client
+          context: .
           file: ./apps/paylo-client/Dockerfile
           push: true
           tags: geekyprogrammer07/paylo-client:latest
@@ -29,7 +29,7 @@ jobs:
       - name: Build & Push paylo-merchant
         uses: docker/build-push-action@v6
         with:
-          context: ./apps/paylo-merchant
+          context: .
           file: ./apps/paylo-merchant/Dockerfile
           push: true
           tags: geekyprogrammer07/paylo-merchant:latest
@@ -37,7 +37,7 @@ jobs:
       - name: Build & Push bank-webhook
         uses: docker/build-push-action@v6
         with:
-          context: ./apps/bank-webhook
+          context: .
           file: ./apps/bank-webhook/Dockerfile
           push: true
           tags: geekyprogrammer07/paylo-bank:latest
