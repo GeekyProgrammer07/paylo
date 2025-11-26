@@ -19,33 +19,33 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build & Push paylo-client
-        env:
-          DATABASE_URL: "file:./dev.db"
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./apps/paylo-client/Dockerfile
           push: true
+          build-args: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
           tags: geekyprogrammer07/paylo-client:latest
 
       - name: Build & Push paylo-merchant
-        env:
-          DATABASE_URL: "file:./dev.db"
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./apps/paylo-merchant/Dockerfile
           push: true
+          build-args: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
           tags: geekyprogrammer07/paylo-merchant:latest
 
       - name: Build & Push bank-webhook
-        env:
-          DATABASE_URL: "file:./dev.db"
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./apps/bank-webhook/Dockerfile
           push: true
+          build-args: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
           tags: geekyprogrammer07/paylo-bank:latest
 
       - name: Verify Pushed Image
