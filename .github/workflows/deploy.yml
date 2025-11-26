@@ -19,6 +19,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build & Push paylo-client
+        env:
+          DATABASE_URL: "file:./dev.db"
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -27,6 +29,8 @@ jobs:
           tags: geekyprogrammer07/paylo-client:latest
 
       - name: Build & Push paylo-merchant
+        env:
+          DATABASE_URL: "file:./dev.db"
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -35,6 +39,8 @@ jobs:
           tags: geekyprogrammer07/paylo-merchant:latest
 
       - name: Build & Push bank-webhook
+        env:
+          DATABASE_URL: "file:./dev.db"
         uses: docker/build-push-action@v6
         with:
           context: .
