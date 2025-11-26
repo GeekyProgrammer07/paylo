@@ -2,6 +2,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+
 RUN corepack enable
 
 COPY pnpm-workspace.yaml turbo.json package.json pnpm-lock.yaml ./
