@@ -22,10 +22,10 @@ WORKDIR /app
 RUN corepack enable
 
 # ENV NODE_ENV=production
-RUN mkdir -p /app/apps/paylo-client/public
+# RUN mkdir -p /app/apps/paylo-client/public
 
 COPY --from=builder /app/apps/paylo-client/.next ./apps/paylo-client/.next
-COPY --from=builder /app/apps/paylo-client/public ./apps/paylo-client/public
+# COPY --from=builder /app/apps/paylo-client/public ./apps/paylo-client/public
 COPY --from=builder /app/apps/paylo-client/package.json ./apps/paylo-client/
 COPY --from=builder /app/apps/paylo-client/next.config.js ./apps/paylo-client/
 COPY --from=builder /app/node_modules ./node_modules
