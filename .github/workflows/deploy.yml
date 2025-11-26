@@ -1,0 +1,63 @@
+name: Build and Deploy to Docker Hub
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build & Push paylo-client
+        uses: docker/build-push-action@v6
+        with:
+          context: ./apps/paylo-client
+          file: ./apps/paylo-client/Dockerfile
+          push: true
+          tags: geekyprogrammer07/paylo-client:latest
+
+      - name: Build & Push paylo-merchant
+        uses: docker/build-push-action@v6
+        with:
+          context: ./apps/paylo-merchant
+          file: ./apps/paylo-merchant/Dockerfile
+          push: true
+          tags: geekyprogrammer07/paylo-merchant:latest
+
+      - name: Build & Push bank-webhook
+        uses: docker/build-push-action@v6
+        with:
+          context: ./apps/bank-webhook
+          file: ./apps/bank-webhook/Dockerfile
+          push: true
+          tags: geekyprogrammer07/paylo-bank:latest
+
+      - name: Verify Pushed Image
+        run: docker pull geekyprogrammer07/paylo-client:latest
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v3
+        with:
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+
+      - name: Deploying to Cloud
+        uses: google-github-actions/ssh-compute@v2
+        with:
+          instance_name: "paylo"
+          zone: "asia-south1-b"
+          ssh_private_key: "${{ secrets.GCP_SSH_PRIVATE_KEY }}"
+          command: |
+            cd ~/paylo
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker system prune -af
