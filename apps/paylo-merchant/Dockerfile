@@ -19,6 +19,7 @@ WORKDIR /app
 RUN corepack enable
 
 # ENV NODE_ENV=production
+RUN mkdir -p /app/apps/paylo-merchant/public
 
 COPY --from=builder /app/apps/paylo-merchant/.next ./apps/paylo-merchant/.next
 COPY --from=builder /app/apps/paylo-merchant/public ./apps/paylo-merchant/public
