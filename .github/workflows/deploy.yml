@@ -18,6 +18,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          install: true
+
       - name: Build & Push paylo-client
         uses: docker/build-push-action@v6
         with:
@@ -42,7 +47,6 @@ jobs:
           cache-from: type=registry,ref=geekyprogrammer07/paylo-merchant:cache
           cache-to: type=registry,ref=geekyprogrammer07/paylo-merchant:cache,mode=max
 
-
       - name: Build & Push bank-webhook
         uses: docker/build-push-action@v6
         with:
@@ -54,7 +58,6 @@ jobs:
           tags: geekyprogrammer07/paylo-bank:latest
           cache-from: type=registry,ref=geekyprogrammer07/paylo-bank:cache
           cache-to: type=registry,ref=geekyprogrammer07/paylo-bank:cache,mode=max
-
 
       - name: Verify Pushed Image
         run: docker pull geekyprogrammer07/paylo-client:latest
