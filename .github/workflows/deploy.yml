@@ -11,7 +11,7 @@ jobs:
 
     environment:
       name: Production
-      url: http://34.180.39.161/
+      url:  http://34.180.39.161/
 
     steps:
       - name: Check Out Repo
