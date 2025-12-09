@@ -5,7 +5,7 @@ import { Card } from "@paylo/ui/Card";
 import { Center } from "@paylo/ui/Center";
 import { TextInput } from "@paylo/ui/TextInput";
 import { useState } from "react";
-import { p2pTransfer } from "../app/lib/actions/p2pTransfer";
+import { p2pTransfer } from "../lib/actions/p2pTransfer";
 
 export function SendCard() {
   const [number, setNumber] = useState("");

@@ -8,6 +8,11 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
+    environment:
+      name: Production
+      url:  http://34.180.39.161/
+
     steps:
       - name: Check Out Repo
         uses: actions/checkout@v4
