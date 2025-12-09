@@ -36,3 +36,5 @@ yarn-error.log*
 *.pem
 
 ngrok.yml
+
+docker-compose-local.yml
