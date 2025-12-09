@@ -80,6 +80,9 @@ jobs:
           key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
           script: |
             cd ~/paylo
+            docker compose down --remove-orphans || true
+            docker rmi geekyprogrammer07/paylo-client:latest geekyprogrammer07/paylo-merchant:latest geekyprogrammer07/paylo-bank:latest || true
+            docker system prune -af || true
+            docker volume prune -f || true
             docker compose pull
-            docker compose up -d --remove-orphans
-            docker system prune -af
+            docker compose up -d --force-recreate
