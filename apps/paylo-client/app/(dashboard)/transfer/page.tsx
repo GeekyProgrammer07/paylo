@@ -1,9 +1,9 @@
 import prisma from "@paylo/db/client";
-import { AddMoney } from "../../../components/AddMoney";
-import { BalanceCard } from "../../../components/BalanceCard";
+import { AddMoney } from "../../_components/AddMoney";
+import { BalanceCard } from "../../_components/BalanceCard";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
-import { OnRampTransactions } from "../../../components/OnRampTransaction";
+import { OnRampTransactions } from "../../_components/OnRampTransaction";
 
 async function getBalance() { //TODO: change the type
    const session = await getServerSession(authOptions);

@@ -5,7 +5,7 @@ import { Card } from "@paylo/ui/Card";
 import { TextInput } from "@paylo/ui/TextInput";
 import { Select } from "@paylo/ui/Select";
 import { Button } from "@paylo/ui/button";
-import { createOnRampTransaction } from "../app/lib/actions/createOnRampTxn";
+import { createOnRampTransaction } from "../lib/actions/createOnRampTxn";
 
 const SUPPORTED_BANKS = [
   {
