@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prisma from "@paylo/db/client";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   // TODO: Add Zod
   // TODO: After Zod have error response like { error: "User exists" }
   // TODO: Give user some money
@@ -15,14 +14,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (existingUser) {
-    return NextResponse.json(
-      {
-        error: "User Already exists",
-      },
-      {
-        status: 400,
-      }
-    );
+    return Response.json({ error: "User Already exists" }, { status: 400 });
   }
 
   const hashed = await bcrypt.hash(password, 10);
@@ -31,12 +23,12 @@ export async function POST(req: NextRequest) {
     data: {
       name,
       number: phone,
-      email,  
+      email,
       password: hashed,
     },
   });
 
-  return NextResponse.json({
+  return Response.json({
     success: true,
   });
 }
