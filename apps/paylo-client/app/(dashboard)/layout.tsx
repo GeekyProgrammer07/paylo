@@ -23,7 +23,7 @@ export default async function Layout({
           first and try again.
         </p>
         <Link
-          href="/api/auth/signin"
+          href="/signin"
           className="px-6 py-3 text-lg font-semibold rounded-xl bg-red-600 hover:bg-red-700 transition-all shadow-lg hover:shadow-red-700/50"
         >
           Take Me to Login →
