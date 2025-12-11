@@ -79,12 +79,13 @@ export default function Signup() {
                   if (res.data?.success) {
                     router.push("/signin");
                   } else {
-                    // fallback error handling
-                    setError("root", { message: res.data?.error || "Signup failed" });
+                    setError("root", {
+                      message: res.data?.error || "Signup failed",
+                    });
                   }
                 } catch (err: unknown) {
                   if (axios.isAxiosError(err)) {
-                    const message = (err.response?.data as any)?.error || "Signup failed";
+                    const message = err.response?.data.error || "Signup Failed";
                     setError("root", { message });
                   } else {
                     setError("root", { message: "Signup failed" });
@@ -97,7 +98,7 @@ export default function Signup() {
                 control={control}
                 name="name"
                 rules={{ required: "Name is required" }}
-                render={({ field, fieldState }) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel className="pb-2">Name</FormLabel>
                     <FormControl>
@@ -160,7 +161,10 @@ export default function Signup() {
                 name="password"
                 rules={{
                   required: "Password is required",
-                  minLength: { value: 6, message: "Password must be at least 6 characters" },
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
                 }}
                 render={({ field }) => (
                   <FormItem>
@@ -178,9 +182,15 @@ export default function Signup() {
                           className="absolute right-3 top-2.5 text-muted-foreground"
                           onClick={() => setShowPassword((v) => !v)}
                           aria-pressed={showPassword}
-                          aria-label={showPassword ? "Hide password" : "Show password"}
+                          aria-label={
+                            showPassword ? "Hide password" : "Show password"
+                          }
                         >
-                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
                         </button>
                       </div>
                     </FormControl>
@@ -195,7 +205,11 @@ export default function Signup() {
                 </p>
               ) : null}
 
-              <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                className="w-full mt-4"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "Creating account..." : "Sign up"}
               </Button>
             </form>
@@ -204,7 +218,10 @@ export default function Signup() {
 
         <CardFooter className="text-center text-sm">
           Already have an account?
-          <Link href="/signin" className="text-blue-600 font-medium hover:underline ml-1">
+          <Link
+            href="/signin"
+            className="text-blue-600 font-medium hover:underline ml-1"
+          >
             Sign in
           </Link>
         </CardFooter>

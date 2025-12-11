@@ -4,7 +4,6 @@ import prisma from "@paylo/db/client";
 import { DBUser, LoginCredentials } from "@paylo/types";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
-import { signIn } from "next-auth/react";
 
 export const authOptions = {
   providers: [
