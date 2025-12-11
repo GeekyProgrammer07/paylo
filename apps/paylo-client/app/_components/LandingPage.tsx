@@ -44,7 +44,7 @@ export default function LandingPage() {
 
             <button
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer bg-[#001c64] text-white hover:bg-blue-600"
-              onClick={() => redirect("/api/auth/signin")}
+              onClick={() => redirect("/signin")}
             >
               Get Started Today <ArrowIcon />
             </button>
