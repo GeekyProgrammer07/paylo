@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
-import path from "path";
+import path, { parse } from "path";
 import prisma from "@paylo/db/client";
-import { PaymentInformation } from "@paylo/types";
+import { PaymentInformationSchema } from "@paylo/types";
+import * as z from "zod";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const app = express();
@@ -19,42 +20,49 @@ app.post("/createTransfer", (_, res) => {
 });
 
 app.post("/hdfcWebhook", async (req, res) => {
-  //TODO: Add zod validation
-  //TODO: HDFC should send us a secret to verify
-  //TODO: Check for processing in db only then increase the balance
-  const paymentInformation: PaymentInformation = {
-    token: req.body.token,
-    userId: req.body.userId,
-    amount: req.body.amount,
-  };
+  const parsedInputs = await PaymentInformationSchema.safeParse(req.body);
+  console.log(parsedInputs);
+  if (!parsedInputs.success) {
+    const errors = z.treeifyError(parsedInputs.error);
+    return res.status(400).json({ errors });
+  }
+
+  const paymentInformation = parsedInputs.data;
+
   try {
-    await prisma.$transaction([
-      prisma.balance.update({
-        where: {
-          userId: paymentInformation.userId,
-        },
-        data: {
-          balance: {
-            increment: Number(paymentInformation.amount * 100),
-          },
-        },
-      }),
-      prisma.onRampTransaction.updateMany({
+    await prisma.$transaction(async (tx) => {
+      const updated = await tx.onRampTransaction.updateMany({
         where: {
           token: paymentInformation.token,
+          status: "Processing",
         },
         data: {
           status: "Success",
         },
-      }),
-    ]);
+      });
+
+      if (updated.count === 0) {
+        throw new Error("ALREADY_PROCESSED");
+      }
+
+      await tx.balance.update({
+        where: { userId: paymentInformation.userId },
+        data: {
+          balance: { increment: Number(paymentInformation.amount * 100) },
+        },
+      });
+    });
 
     res.status(200).json({
       message: "Captured",
     });
-  } catch (err) {
+  } catch (err: any) {
+    if (err.message === "ALREADY_PROCESSED") {
+      return res.status(409).send("Payment already processed");
+    }
+
     console.error("Payment capture failed:", err);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).send("Internal Server Error");
   }
 });
 

@@ -20,12 +20,13 @@
   "dependencies": {
     "@paylo/db": "workspace:*",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@paylo/eslint-config": "workspace:*",
-    "@paylo/types": "workspace:*",
     "@paylo/prettier-config": "workspace:*",
+    "@paylo/types": "workspace:*",
     "@paylo/typescript-config": "workspace:*",
     "@types/express": "^5.0.5",
     "concurrently": "^9.2.1",
