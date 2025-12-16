@@ -8,7 +8,7 @@ export const PaymentInformationSchema = z.object({
   userId: z.number({ error: "userID is requred" }),
   amount: z
     .number({ error: "Account cant be blank" })
-    .min(10, { message: "Amount must be at least 10" }),
+    .min(100, { message: "Amount must be at least 100" }),
 });
 
 export type PaymentInformation = z.infer<typeof PaymentInformationSchema>;

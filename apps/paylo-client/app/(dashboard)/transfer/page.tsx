@@ -5,8 +5,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 import { OnRampTransactions } from "../../_components/OnRampTransaction";
 
-async function getBalance() { //TODO: change the type
-   const session = await getServerSession(authOptions);
+async function getBalance() {
+  //TODO: change the type
+  const session = await getServerSession(authOptions);
   const balance = await prisma.balance.findFirst({
     where: {
       userId: session?.user?.dbId,
@@ -24,6 +25,9 @@ async function getOnRampTransactions() {
     where: {
       userId: Number(session?.user!.dbId),
     },
+    orderBy: {
+      startTime: "desc"
+    }
   });
   return txns.map((t) => ({
     time: t.startTime,
@@ -36,10 +40,10 @@ async function getOnRampTransactions() {
 export default async function Page() {
   const balance = await getBalance();
   const transactions = await getOnRampTransactions();
-
+  
   return (
     <div className="w-screen">
-      <div className="text-4xl text-blue-700 pt-8 mb-8 font-bold">Transfer</div>
+      <div className="text-4xl text-blue-700 pt-8 mb-8 font-bold">Bank Transfer</div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 p-2">
         <div>
           <AddMoney />

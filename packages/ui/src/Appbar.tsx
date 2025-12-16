@@ -4,7 +4,7 @@ interface AppbarProps {
   user?: {
     name?: string | null;
   };
-  // TODO: Change any to porper types
+  
   onSignin: () => Promise<void>;
   onSignout: () => Promise<void>;
 }
