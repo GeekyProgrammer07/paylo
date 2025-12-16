@@ -1,47 +1,39 @@
 "use client";
 
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-} from "recharts";
+import axios from "axios";
+import Graph, { BalancePoint } from "@/app/_components/Graph";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
-  const data = [
-    { name: "A", uv: 400, amt: 2400 },
-    { name: "B", uv: 300, amt: 2400 },
-    { name: "C", uv: 300, amt: 2400 },
-    { name: "D", uv: 200, amt: 2400 },
-    { name: "E", uv: 278, amt: 2400 },
-    { name: "F", uv: 189, amt: 2400 },
-  ];
+  const { data: session, status } = useSession();
+  const [data, setData] = useState<BalancePoint[]>([]);
 
+  useEffect(() => {
+    if (status !== "authenticated") return;
+
+    const fetchData = async () => {
+      const response = await axios.get(
+        "http://localhost:3001/api/balance/history",
+        {
+          params: {
+            userId: session.user.dbId,
+          },
+        }
+      );
+
+      setData(response.data);
+    };
+
+    fetchData();
+  }, [status, session?.user?.dbId]);
+
+  if (status === "loading") {
+    return <div>Loading session...</div>;
+  }
   return (
-    <div
-      style={{
-        width: "50%",
-        maxWidth: 900,
-        margin: "0 auto",
-        padding: 16,
-        minHeight: 200,
-        height: 400,
-      }}
-    >
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <XAxis dataKey="name" />
-          <YAxis width={48} />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="uv" stroke="#8884d8" dot />
-        </LineChart>
-      </ResponsiveContainer>
+    <div>
+      <Graph data={data} />
     </div>
   );
 }

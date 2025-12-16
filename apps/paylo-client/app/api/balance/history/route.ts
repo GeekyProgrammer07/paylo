@@ -20,17 +20,27 @@ export async function GET(req: Request) {
   });
 
   const events = [
-    ...onramps.map((o) => ({ time: new Date(o.startTime), delta: o.amount })),
-    ...sent.map((s) => ({ time: new Date(s.timestamp), delta: -s.amount })),
-    ...received.map((r) => ({ time: new Date(r.timestamp), delta: r.amount })),
-  ];
-
-  events.sort((a, b) => a.time.getTime() - b.time.getTime());
+    ...onramps.map((o) => ({
+      time: new Date(o.startTime),
+      delta: o.amount / 100,
+    })),
+    ...sent.map((s) => ({
+      time: new Date(s.timestamp),
+      delta: -s.amount / 100,
+    })),
+    ...received.map((r) => ({
+      time: new Date(r.timestamp),
+      delta: r.amount / 100,
+    })),
+  ].sort((a, b) => a.time.getTime() - b.time.getTime());
 
   let balance = 0;
   const history = events.map((e) => {
     balance += e.delta;
-    return { time: e.time, balance };
+    return {
+      time: e.time.toISOString(),
+      balance,
+    };
   });
 
   return Response.json(history);
