@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import path, { parse } from "path";
+import path from "path";
 import prisma from "@paylo/db/client";
 import { PaymentInformationSchema } from "@paylo/types";
 import * as z from "zod";
@@ -56,12 +56,14 @@ app.post("/hdfcWebhook", async (req, res) => {
     res.status(200).json({
       message: "Captured",
     });
-  } catch (err: any) {
-    if (err.message === "ALREADY_PROCESSED") {
-      return res.status(409).send("Payment already processed");
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      if (err.message === "ALREADY_PROCESSED") {
+        return res.status(409).send("Payment already processed");
+      }
+    } else {
+      console.error("Payment capture failed:", err);
     }
-
-    console.error("Payment capture failed:", err);
     return res.status(500).send("Internal Server Error");
   }
 });
