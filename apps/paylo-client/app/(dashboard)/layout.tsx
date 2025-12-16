@@ -44,11 +44,6 @@ export default async function Layout({
               icon={<TransferIcon />}
               title="Transfer"
             />
-            <SidebarItem
-              href={"/transactions"}
-              icon={<TransactionsIcon />}
-              title="Transactions"
-            />
             <SidebarItem href={"/p2p"} icon={<PeerToPeerIcon />} title="P2P" />
           </div>
         </div>
