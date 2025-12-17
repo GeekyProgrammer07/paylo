@@ -4,9 +4,12 @@ import path from "path";
 import prisma from "@paylo/db/client";
 import { PaymentInformationSchema } from "@paylo/types";
 import * as z from "zod";
+import cors from "cors";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
 console.log("Hi there");
