@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Card } from "@paylo/ui/Card";
 import { TextInput } from "@paylo/ui/TextInput";
 import { Select } from "@paylo/ui/Select";
-import { Button } from "@paylo/ui/button";
 import { createOnRampTransaction } from "../lib/actions/createOnRampTxn";
 
 const SUPPORTED_BANKS = [
@@ -24,18 +23,33 @@ export const AddMoney = () => {
     SUPPORTED_BANKS[0]?.redirectUrl
   );
   const [amount, setAmount] = useState(0);
-  const [provider, setProvider] = useState(SUPPORTED_BANKS[0]!.name); //TODO: Add more banks
+  const [provider, setProvider] = useState(SUPPORTED_BANKS[0]!.name);
+  const [error, setError] = useState<string | null>(null);
   return (
     <Card title="Add Money">
       <div className="w-full">
-        {/* TODO: Add type validation for amount */}
         <TextInput
           label={"Amount"}
           placeholder={"Amount"}
           onChange={(value) => {
-            setAmount(Number(value));
+            const num = Number(value);
+            if (Number.isNaN(num)) {
+              setAmount(0);
+              setError("Amount must be a number");
+              return;
+            }
+
+            if (num < 100) {
+              setAmount(num);
+              setError("Minimum amount is 100");
+              return;
+            }
+
+            setAmount(num);
+            setError(null);
           }}
         />
+        {error && <p className="text-red-500 text-sm">{error}</p>}
         <div className="py-4 text-left">Bank</div>
         <Select
           onSelect={(value) => {
@@ -52,14 +66,17 @@ export const AddMoney = () => {
           }))}
         />
         <div className="flex justify-center pt-4">
-          <Button
+          <button
+            disabled={!!error || amount === 0}
             onClick={async () => {
-              await createOnRampTransaction(amount * 100, provider); // TODO: Change the hello to the appr bank also do amount * 100 over here
+              await createOnRampTransaction(amount * 100, provider);
               window.location.href = redirectUrl || "";
             }}
+            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+            type="button"
           >
             Add Money
-          </Button>
+          </button>
         </div>
       </div>
     </Card>

@@ -1,7 +1,6 @@
 "use client";
 import { Appbar } from "@paylo/ui/Appbar";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 export function AppbarClient() {
   const session = useSession();
@@ -11,8 +10,7 @@ export function AppbarClient() {
       <Appbar
         onSignin={signIn}
         onSignout={async () => {
-          await signOut();
-          redirect("/signin")
+          signOut({ callbackUrl: "/signin" });
         }}
         user={session.data?.user}
       />

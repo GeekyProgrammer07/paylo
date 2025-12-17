@@ -6,11 +6,15 @@ export const OnRampTransactions = ({
   transactions: {
     time: Date;
     amount: number;
-    // TODO: Change Status type to be more specific
     status: string;
     provider: string;
   }[];
 }) => {
+  const statusColor: Record<string, string> = {
+    Success: "text-green-600",
+    Processing: "text-yellow-600",
+    Failure: "text-red-500",
+  };
   if (!transactions.length) {
     return (
       <Card title="Recent Transactions">
@@ -18,19 +22,22 @@ export const OnRampTransactions = ({
       </Card>
     );
   }
-  //TODO: Add Various status or color like green for succ yel for proc, red for fail
   return (
     <Card title="Recent Transactions">
       <div className="pt-2">
-        {transactions.map((t,index) => (
-          <div key={index} className="flex justify-between">
+        {transactions.map((t, index) => (
+          <div key={index} className="flex justify-between items-center py-2">
             <div>
               <div className="text-sm">Received INR</div>
               <div className="text-slate-600 text-xs">
                 {t.time.toDateString()}
               </div>
+              <div className={`text-xs font-medium ${statusColor[t.status]}`}>
+                {t.status}
+              </div>
             </div>
-            <div className="flex flex-col justify-center">
+
+            <div className="flex flex-col justify-center font-medium">
               + Rs {t.amount / 100}
             </div>
           </div>

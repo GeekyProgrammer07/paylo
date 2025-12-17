@@ -4,7 +4,7 @@ import { authOptions } from "../lib/auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { AppbarClient } from "../_components/AppbarClient";
-import { HomeIcon, PeerToPeerIcon, TransactionsIcon, TransferIcon } from "@paylo/ui/Icons";
+import { HomeIcon, PeerToPeerIcon, TransferIcon } from "@paylo/ui/Icons";
 
 export default async function Layout({
   children,
@@ -43,11 +43,6 @@ export default async function Layout({
               href={"/transfer"}
               icon={<TransferIcon />}
               title="Transfer"
-            />
-            <SidebarItem
-              href={"/transactions"}
-              icon={<TransactionsIcon />}
-              title="Transactions"
             />
             <SidebarItem href={"/p2p"} icon={<PeerToPeerIcon />} title="P2P" />
           </div>
