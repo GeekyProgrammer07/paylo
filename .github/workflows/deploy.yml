@@ -64,9 +64,6 @@ jobs:
           cache-from: type=registry,ref=geekyprogrammer07/paylo-bank:cache
           cache-to: type=registry,ref=geekyprogrammer07/paylo-bank:cache,mode=max
 
-      - name: Verify Pushed Image
-        run: docker pull geekyprogrammer07/paylo-client:latest
-
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v3
         with:
