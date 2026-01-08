@@ -38,3 +38,4 @@ yarn-error.log*
 ngrok.yml
 
 docker-compose-local.yml
+docker-compose-test.yml

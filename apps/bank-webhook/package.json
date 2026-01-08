@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@paylo/db": "workspace:*",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "zod": "^4.1.13"
@@ -28,6 +29,7 @@
     "@paylo/prettier-config": "workspace:*",
     "@paylo/types": "workspace:*",
     "@paylo/typescript-config": "workspace:*",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "concurrently": "^9.2.1",
     "esbuild": "^0.25.11",
