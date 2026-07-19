@@ -31,6 +31,9 @@
         "^check-types"
       ]
     },
+    "test": {
+      "outputs": []
+    },
     "dev": {
       "cache": false,
       "persistent": true
