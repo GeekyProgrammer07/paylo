@@ -3,6 +3,9 @@ import prisma from "@paylo/db/client";
 import * as z from "zod";
 import { SignupSchema } from "@paylo/types";
 import Randomstring from "randomstring";
+import { createLogger } from "@paylo/logger";
+
+const logger = createLogger({ service: "paylo-client" });
 
 const ORIGIN = "http://34.93.78.38";
 
@@ -54,6 +57,8 @@ export async function POST(req: Request) {
       data: { userId: user.id, balance: amount, locked: 0 },
     });
   });
+
+  logger.info("New user signed up", { phone });
 
   return new Response(JSON.stringify({ success: true }), {
     status: 200,

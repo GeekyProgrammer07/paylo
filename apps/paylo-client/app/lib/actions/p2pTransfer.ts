@@ -3,6 +3,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import prisma from "@paylo/db/client";
+import { createLogger, errorMeta } from "@paylo/logger";
+
+const logger = createLogger({ service: "paylo-client" });
 
 export const p2pTransfer = async (to: string, amount: number) => {
   try {
@@ -68,11 +71,17 @@ export const p2pTransfer = async (to: string, amount: number) => {
       });
     });
 
+    logger.info("P2P transfer completed", {
+      fromUserId: fromUser.dbId,
+      toUserId: toUser.id,
+      amount,
+    });
     return {
       ok: true,
       message: "Transfer successful",
     };
   } catch (err: unknown) {
+    logger.error("P2P transfer failed", errorMeta(err));
     if (err instanceof Error) {
       return {
         ok: false,

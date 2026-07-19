@@ -4,6 +4,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import prisma from "@paylo/db/client";
 import randomstring from "randomstring";
+import { createLogger } from "@paylo/logger";
+
+const logger = createLogger({ service: "paylo-client" });
 
 export const createOnRampTransaction = async (
   amount: number,
@@ -27,5 +30,10 @@ export const createOnRampTransaction = async (
       startTime: new Date(),
       userId: session.user.dbId,
     },
+  });
+  logger.info("OnRamp transaction created", {
+    userId: session.user.dbId,
+    provider,
+    amount,
   });
 };

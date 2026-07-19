@@ -4,6 +4,9 @@ import prisma from "@paylo/db/client";
 import { DBUser, LoginCredentials } from "@paylo/types";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
+import { createLogger, errorMeta } from "@paylo/logger";
+
+const logger = createLogger({ service: "paylo-client" });
 
 export const authOptions = {
   providers: [
@@ -61,7 +64,7 @@ export const authOptions = {
             number: user.number,
           };
         } catch (e) {
-          console.error(e);
+          logger.warn("Credentials sign-in failed", errorMeta(e));
         }
         return null;
       },
