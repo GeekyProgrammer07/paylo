@@ -1,0 +1,19 @@
+{
+  "name": "@paylo/logger",
+  "version": "1.0.0",
+  "description": "Shared lightweight logger for paylo apps",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@paylo/typescript-config": "workspace:*",
+    "vitest": "^4.1.10"
+  }
+}
